@@ -1,0 +1,12 @@
+{
+  "name": "society-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Residential society website with AI-assisted letter and minutes drafting (Netlify Functions + Gemini).",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "npx netlify-cli dev",
+    "deploy": "npx netlify-cli deploy --prod",
+    "test": "node --test"
+  }
+}

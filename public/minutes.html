@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meeting minutes — Sai Heritage</title>
+<meta name="description" content="Record AGM, SGM and committee meeting minutes with attendance, quorum, votes and action owners.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header"><div class="wrap bar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span data-society-name>Sai Heritage</span></a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav id="nav" aria-label="Main">
+    <a href="/">Home</a><a href="/letter.html">Member letter</a><a href="/minutes.html">Meeting minutes</a><a href="/rules.html">Rules &amp; FAQ</a>
+  </nav>
+</div></header>
+<main id="main" class="wrap page">
+  <p class="eyebrow">Meeting records</p>
+  <h1>Record meeting minutes</h1>
+  <p class="lead">Enter what happened. Names, attendance, quorum, votes and action owners are copied exactly as you enter them; the assistant only tidies the wording of your discussion notes and resolutions.</p>
+  <div class="notice"><strong>You decide every fact.</strong> The tool never calculates quorum, passes a resolution or counts a vote for you. Check required quorum and majorities against the society’s registered bye-laws.</div>
+  <div id="health-banner" class="notice notice-warn" hidden></div>
+
+  <form id="minutes-form" novalidate>
+    <div class="error-summary" role="alert" hidden></div>
+
+    <fieldset><legend>Meeting</legend>
+      <div class="row">
+        <div class="field"><label class="req" for="societyName">Society name</label><input id="societyName" name="societyName" maxlength="200"></div>
+        <div class="field"><label class="req" for="meetingType">Meeting type</label><select id="meetingType" name="meetingType"></select></div>
+        <div class="field"><label class="req" for="meetingDate">Meeting date</label><input type="date" id="meetingDate" name="meetingDate"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="startTime">Start time <span class="opt">(optional)</span></label><input type="time" id="startTime" name="startTime"></div>
+        <div class="field"><label for="endTime">End time <span class="opt">(optional)</span></label><input type="time" id="endTime" name="endTime"></div>
+        <div class="field"><label class="req" for="venue">Venue or mode</label><input id="venue" name="venue" maxlength="200" placeholder="e.g. Clubhouse / online"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label class="req" for="chairperson">Chairperson</label><input id="chairperson" name="chairperson" maxlength="200"></div>
+        <div class="field"><label class="req" for="recorder">Minutes recorded by</label><input id="recorder" name="recorder" maxlength="200"></div>
+        <div class="field"><label for="noticeDate">Notice circulated on <span class="opt">(optional)</span></label><input type="date" id="noticeDate" name="noticeDate"></div>
+      </div>
+    </fieldset>
+
+    <fieldset><legend id="att-legend">Attendance</legend>
+      <div id="attendees" class="rows"></div>
+      <div class="form-actions"><button class="btn btn-secondary btn-sm" type="button" id="add-attendee">+ Add attendee</button><span id="present-count" class="hint" aria-live="polite"></span></div>
+      <details class="bulk"><summary>Paste a list of attendees</summary>
+        <div class="field"><label for="bulk">One per line: Name, Flat / designation</label><textarea id="bulk" rows="5" placeholder="Asha Rao, A-101&#10;Vikram Shah, B-202"></textarea>
+        <p class="hint">Everyone pasted is added as Present. Change individual rows afterwards if needed.</p></div>
+        <button class="btn btn-ghost btn-sm" type="button" id="bulk-add">Add pasted names</button>
+      </details>
+      <p class="hint">Rows left completely blank are ignored.</p>
+    </fieldset>
+
+    <fieldset><legend>Quorum record</legend>
+      <p class="hint">Record what the meeting determined. Enter the requirement from the society’s registered bye-laws — this tool does not look it up or assume it.</p>
+      <div class="row">
+        <div class="field"><label for="quorumRequired">Quorum required <span class="opt">(optional)</span></label><input id="quorumRequired" name="quorumRequired" data-path="quorum.required" maxlength="200" placeholder="e.g. 10 members"></div>
+        <div class="field"><label class="req" for="quorumStatus">Quorum status</label><select id="quorumStatus" name="quorumStatus" data-path="quorum.status"></select></div>
+        <div class="field"><label for="quorumBasis">Basis / reference <span class="opt">(optional)</span></label><input id="quorumBasis" name="quorumBasis" data-path="quorum.basis" maxlength="400" placeholder="Where the requirement comes from"></div>
+      </div>
+      <p id="quorum-hint" class="hint" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset><legend>Agenda, discussion and resolutions</legend>
+      <div id="agenda"></div>
+      <button class="btn btn-secondary btn-sm" type="button" id="add-item">+ Add agenda item</button>
+    </fieldset>
+
+    <fieldset><legend>Action items</legend>
+      <div id="actions" class="rows"></div>
+      <button class="btn btn-secondary btn-sm" type="button" id="add-action">+ Add action item</button>
+      <p class="hint">Every action needs an owner you have confirmed. Leave the due date empty if it is not yet agreed.</p>
+    </fieldset>
+
+    <fieldset><legend>Closing</legend>
+      <div class="row"><div class="field"><label for="nextMeetingDate">Next meeting date <span class="opt">(optional)</span></label><input type="date" id="nextMeetingDate" name="nextMeetingDate"></div></div>
+    </fieldset>
+
+    <div class="form-actions">
+      <button class="btn" id="submit" type="submit">Generate draft minutes</button>
+      <button class="btn btn-ghost" type="button" id="clear-draft">Clear saved form</button>
+      <span id="status" class="status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="hint">Your entries are saved in this browser only so a refresh does not lose them. Use “Clear saved form” on a shared computer.</p>
+  </form>
+
+  <section id="result" class="result" aria-labelledby="result-title" hidden>
+    <h2 id="result-title" tabindex="-1">Draft minutes</h2>
+    <p class="draft-banner" role="note">Draft — requires review</p>
+    <div id="warnings"></div><div id="notes"></div>
+    <div class="field"><label for="doc">Edit the minutes below</label><textarea id="doc" class="doc-text" rows="30"></textarea>
+      <p class="placeholder-count hint" aria-live="polite"></p></div>
+    <div class="doc-tools">
+      <button class="btn" type="button" data-action="copy">Copy</button>
+      <button class="btn btn-secondary" type="button" data-action="download">Download .txt</button>
+      <button class="btn btn-secondary" type="button" data-action="print">Print</button>
+      <button class="btn btn-ghost" type="button" id="regen">Regenerate</button>
+    </div>
+    <p class="doc-status status" role="status" aria-live="polite"></p>
+    <div class="notice"><strong>Not an approved record.</strong> These minutes are a draft for the recorder and chairperson to check against the meeting. Nothing here has been confirmed, signed or sent. Copy, download and print add a “Draft — requires review” line at the top. <span id="model-note"></span></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <p><strong data-society-name>Sai Heritage</strong></p>
+  <p>Documents produced with the AI assistant are marked “Draft — requires review”. This website never sends letters or minutes on anyone’s behalf, and it does not confirm delivery, approval or any decision.</p>
+</div></footer>
+<div id="print-area" class="print-only" aria-hidden="true"><p id="print-draft" class="print-draft"></p><pre id="print-body"></pre></div>
+<script src="/js/validators.js"></script><script src="/js/common.js"></script><script src="/js/minutes.js"></script></body></html>

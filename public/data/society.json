@@ -1,0 +1,17 @@
+{
+  "name": "Sai Heritage",
+  "registration": "[Registration number — to be confirmed]",
+  "address": "[Society address — to be confirmed]",
+  "officeHours": "[Office hours — to be confirmed]",
+  "officeBearers": [
+    { "role": "Chairman", "name": "[Name to be confirmed]", "phone": "[Phone]", "email": "[Email]" },
+    { "role": "Secretary", "name": "[Name to be confirmed]", "phone": "[Phone]", "email": "[Email]" },
+    { "role": "Finance lead", "name": "[Name to be confirmed]", "phone": "[Phone]", "email": "[Email]" },
+    { "role": "Security lead", "name": "[Name to be confirmed]", "phone": "[Phone]", "email": "[Email]" }
+  ],
+  "emergencyContacts": [
+    { "label": "Security desk", "value": "[Phone]" },
+    { "label": "Lift service", "value": "[Phone]" },
+    { "label": "Water / pump service", "value": "[Phone]" }
+  ]
+}

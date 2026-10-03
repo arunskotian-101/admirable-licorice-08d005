@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rules & FAQ — Sai Heritage</title>
+<meta name="description" content="Society guidance drawn only from the sources supplied by the society.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header"><div class="wrap bar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span data-society-name>Sai Heritage</span></a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav id="nav" aria-label="Main">
+    <a href="/">Home</a><a href="/letter.html">Member letter</a><a href="/minutes.html">Meeting minutes</a><a href="/rules.html">Rules &amp; FAQ</a>
+  </nav>
+</div></header>
+<main id="main" class="wrap page">
+  <p class="eyebrow">Rules &amp; FAQ</p>
+  <h1>Society rules and frequently asked questions</h1>
+  <p class="lead">Everything here comes from the sources listed below. If something is not covered, this page says so instead of guessing.</p>
+  <div class="notice notice-warn"><strong>Verify before relying.</strong> The society’s registered bye-laws, amendment certificates and later applicable legislation must be checked before making claims about voting rights, timelines or the validity of a decision. Contested interpretation goes to authorized review.</div>
+
+  <h2 class="cat-title">Sources used</h2>
+  <div id="sources" class="grid c2" aria-live="polite"><p class="muted">Loading…</p></div>
+
+  <h2 class="cat-title">Bye-law provisions</h2>
+  <div id="rules"></div>
+
+  <h2 class="cat-title">Frequently asked questions</h2>
+  <div class="field"><label for="search">Search the FAQ</label><input id="search" type="search" placeholder="e.g. waiver, minutes, complaint"></div>
+  <p id="search-status" class="hint" role="status" aria-live="polite"></p>
+  <div id="faq"></div>
+
+  <section class="card" aria-labelledby="ask-title">
+    <h2 id="ask-title">Ask a question</h2>
+    <p class="muted">The assistant answers only from the entries on this page and shows which ones it used. If they do not cover your question, it says so.</p>
+    <div id="health-banner" class="notice notice-warn" hidden></div>
+    <form id="ask-form" novalidate>
+      <div class="error-summary" role="alert" hidden></div>
+      <div class="field"><label class="req" for="question">Your question</label><input id="question" name="question" maxlength="600" autocomplete="off"></div>
+      <div class="form-actions"><button class="btn" id="ask-btn" type="submit">Ask</button><span id="ask-status" class="status" role="status" aria-live="polite"></span></div>
+    </form>
+    <div id="answer" hidden></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <p><strong data-society-name>Sai Heritage</strong></p>
+  <p>Documents produced with the AI assistant are marked “Draft — requires review”. This website never sends letters or minutes on anyone’s behalf, and it does not confirm delivery, approval or any decision.</p>
+</div></footer>
+<div id="print-area" class="print-only" aria-hidden="true"><p id="print-draft" class="print-draft"></p><pre id="print-body"></pre></div>
+<script src="/js/validators.js"></script><script src="/js/common.js"></script><script src="/js/rules.js"></script></body></html>
