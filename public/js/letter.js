@@ -10,6 +10,14 @@
   const today = localToday();
   ["letterDate", "issueStartDate", "issueEndDate"].forEach((n) => form.elements[n].max = today);
   form.elements.letterDate.value = today;
+  try {
+    const raw = sessionStorage.getItem("society-assistant-concern");
+    if (raw) { const concern = JSON.parse(raw); if (typeof concern.question === "string") {
+      form.elements.subject.value = concern.question.slice(0, 300);
+      form.elements.details.value = concern.question.slice(0, 3000);
+      form.elements.requestedAction.value = "Please review my concern and clarify the applicable registered provision and next steps.";
+    } sessionStorage.removeItem("society-assistant-concern"); }
+  } catch { /* Member can still complete the form manually. */ }
   initCounters(form);
   checkHealth($("#health-banner"));
   loadSociety().then((s) => { if (s && !isPlaceholder(s.name) && !form.elements.societyName.value) form.elements.societyName.value = s.name; });

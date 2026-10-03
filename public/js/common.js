@@ -39,7 +39,7 @@
   async function applySocietyName() {
     const s = await loadSociety();
     if (!s) return null;
-    $$("[data-society-name]").forEach((el) => { el.textContent = s.name; if (isPlaceholder(s.name) && el.closest(".brand")) el.textContent = "Sai Heritage"; });
+    $$("[data-society-name]").forEach((el) => { el.textContent = s.name; if (isPlaceholder(s.name) && el.closest(".brand")) el.textContent = "Residential Society"; });
     return s;
   }
 

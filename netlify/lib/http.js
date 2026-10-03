@@ -1,5 +1,6 @@
 "use strict";
 const crypto = require("crypto");
+const { getStore } = require("@netlify/blobs");
 
 class AppError extends Error {
   constructor(status, code, message, fields) {
@@ -18,7 +19,8 @@ const clientIp = (h, context) => (context && context.ip) || h["x-nf-client-conne
 
 /* Best-effort limiter: serverless instances are short-lived, so this slows abuse but is not a hard cap. */
 const buckets = new Map();
-function rateLimit(ip) {
+async function rateLimit(ip) {
+  await distributedLimit(ip);
   const limit = parseInt(process.env.RATE_LIMIT_PER_10_MIN, 10) || 15;
   const windowMs = 600000, now = Date.now();
   const hits = (buckets.get(ip) || []).filter((t) => now - t < windowMs);
@@ -28,6 +30,49 @@ function rateLimit(ip) {
   }
   hits.push(now); buckets.set(ip, hits);
   if (buckets.size > 5000) buckets.clear();
+}
+
+const limiterKey = (ip) => "society:ai:" + crypto.createHash("sha256").update((process.env.SOCIETY_RATE_LIMIT_NAMESPACE || "default")+":"+ip).digest("hex");
+const limiterMax = () => Math.max(1,Math.min(1000,parseInt(process.env.RATE_LIMIT_PER_10_MIN,10)||15));
+
+/* Uses Upstash when configured (atomic); otherwise Netlify Blobs, shared across function instances. */
+async function distributedLimit(ip) {
+  const url = process.env.UPSTASH_REDIS_REST_URL, token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) {
+    if (process.env.NETLIFY === "true" || process.env.NETLIFY_DEV === "true" || process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT === "true") return blobsLimit(ip);
+    return; // local tests only
+  }
+  let parsed;
+  try { parsed = new URL(url); } catch { throw new AppError(503,"LIMITER_CONFIG","The server request limiter is not configured correctly."); }
+  if (parsed.protocol !== "https:") throw new AppError(503,"LIMITER_CONFIG","The request limiter requires HTTPS.");
+  const key = limiterKey(ip), limit = limiterMax();
+  const lua = "local n=redis.call('INCR',KEYS[1]); if n==1 then redis.call('EXPIRE',KEYS[1],600) end; return n";
+  try {
+    const res = await fetch(parsed.href,{method:"POST",headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify(["EVAL",lua,"1",key]),signal:AbortSignal.timeout(4000)});
+    const data=await res.json();
+    if (!res.ok || data.error || !Number.isInteger(Number(data.result)) || Number(data.result) < 1) throw new Error("limiter unavailable");
+    if (Number(data.result)>limit) throw new AppError(429,"RATE_LIMITED","Too many requests. Please wait up to 10 minutes and try again.");
+  } catch(err) {
+    if(err instanceof AppError) throw err;
+    throw new AppError(503,"LIMITER_UNAVAILABLE","The request limiter is temporarily unavailable. Please try again shortly.");
+  }
+}
+
+async function blobsLimit(ip) {
+  const windowMs = 600000, now = Date.now(), limit = limiterMax();
+  let store, key, hits;
+  try {
+    store = getStore({ name: "rate-limit", consistency: "strong" });
+    key = limiterKey(ip).replace(/:/g, "-");
+    const saved = await store.get(key, { type: "json" });
+    hits = (Array.isArray(saved) ? saved : []).filter((t) => Number.isFinite(t) && now - t < windowMs);
+  } catch (err) {
+    console.error("Rate limiter unavailable:", err && err.message);
+    throw new AppError(503,"LIMITER_UNAVAILABLE","The request limiter is temporarily unavailable. Please try again shortly.");
+  }
+  if (hits.length >= limit) throw new AppError(429,"RATE_LIMITED","Too many requests. Please wait up to 10 minutes and try again.");
+  hits.push(now);
+  try { await store.setJSON(key, hits); } catch (err) { console.error("Rate limiter write failed:", err && err.message); }
 }
 
 function checkAccess(h) {
@@ -55,7 +100,7 @@ function route(fn) {
     try {
       if (req.method !== "POST") throw new AppError(405, "METHOD_NOT_ALLOWED", "This endpoint only accepts POST requests.");
       const h = lowerKeys(req.headers);
-      rateLimit(clientIp(h, context));
+      await rateLimit(clientIp(h, context));
       checkAccess(h);
       return reply(200, await fn(await parseBody(req)));
     } catch (err) {

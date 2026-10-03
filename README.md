@@ -1,4 +1,4 @@
-# Sai Heritage Society Website
+# Residential Society Website
 
 A responsive society website built from the *Society Work — Operating Review* deck, using plain HTML, CSS and vanilla JavaScript, with Netlify Functions for server-side Gemini requests.
 
@@ -7,7 +7,7 @@ A responsive society website built from the *Society Work — Operating Review* 
 | `/` Home | Society name, office-bearer and emergency-contact **placeholders**, complaint process and service review from the deck |
 | `/letter.html` | Member letter form → editable AI draft → copy / download / print |
 | `/minutes.html` | AGM, SGM, weekly and monthly committee minutes: attendance, quorum record, agenda, discussion, resolutions, votes, action owners |
-| `/rules.html` | Rules & FAQ built **only** from `public/data/knowledge.json`, plus a question box that answers only from those entries |
+| `/rules.html` | Rules & FAQ plus Ask Society Assistant using retrieved, reviewed passages in `netlify/data/assistant-sources.json` |
 
 ## 1. How it protects against invented content
 
@@ -69,7 +69,7 @@ CLI alternative: `npx netlify-cli login`, `npx netlify-cli init`, set the variab
 A public site with an AI endpoint can be used by anyone who finds it. Two protections are built in:
 
 - **`SOCIETY_ACCESS_CODE`** — if set, the site asks for the code the first time someone generates a document (kept only for that browser tab). Share the code through your normal resident channel. Strongly recommended.
-- **Per-IP rate limit** (`RATE_LIMIT_PER_10_MIN`, default 15). This is best-effort only because serverless instances are short-lived. Also set a spending/quota limit on your Google AI Studio project.
+- **Per-IP rate limit** (`RATE_LIMIT_PER_10_MIN`, default 15). Netlify production requires Upstash Redis REST credentials for atomic shared limits across instances. Local development additionally uses a best-effort in-memory limiter. Also set a Google AI quota/budget.
 
 ## 8. Privacy
 
@@ -77,25 +77,11 @@ A public site with an AI endpoint can be used by anyone who finds it. Two protec
 - The minutes form is auto-saved in the browser's `localStorage` (this device only). Use **Clear saved form** on shared computers.
 - Nothing is stored on the server; the functions keep no database.
 
-## 9. Adding verified bye-law provisions
+## 9. Assistant sources and registered provisions
 
-No bye-law clause is included, because none was supplied in verified form. The deck lists the Maharashtra 2014 model bye-laws only as a general reference and says the society's registered provisions must be verified. To add a clause, a committee member compares it with the **society's registered bye-laws**, then adds an entry to `entries` in `public/data/knowledge.json`:
+See [ASSISTANT_SETUP.md](ASSISTANT_SETUP.md). The uploaded 2014 model PDF is included under `public/documents/`. It is NOT the society’s registered bye-laws. Current searchable coverage is deliberately limited to model bye-laws 44, 70, 165, 171 and 172 and the opening excerpt of Act section 13(1). Other questions fall back rather than guessing.
 
-```json
-{
-  "id": "rule-example-1",
-  "type": "rule",
-  "category": "Meetings",
-  "title": "Short heading shown on the page",
-  "quote": "The exact wording copied from the verified document.",
-  "sourceId": "society-registered-bye-laws",
-  "locator": "Bye-law number and heading as printed",
-  "verifiedBy": "Name and role of the person who checked it",
-  "verifiedOn": "2026-10-03"
-}
-```
-
-Also add the matching source under `sources` (`"id": "society-registered-bye-laws"`, a title, `"kind": "society-document"`, and a note). `npm test` fails if an entry has no source, locator or verification details. The rules page and the question box pick it up automatically.
+The public FAQ contains society presentation process guidance; it is not used as legal evidence by the assistant. The server corpus is `netlify/data/assistant-sources.json`. Adding text to the public FAQ does not automatically authorise it as an assistant source.
 
 ## 10. Troubleshooting
 

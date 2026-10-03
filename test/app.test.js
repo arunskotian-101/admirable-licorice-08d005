@@ -36,7 +36,7 @@ const invoke = async (mod, init) => {
 const call = (mod, body, headers = {}) => invoke(mod, { method: "POST", headers, body: JSON.stringify(body) });
 const parse = (r) => JSON.parse(r.body);
 
-test.beforeEach(() => { process.env.GEMINI_API_KEY = "test-key"; process.env.GEMINI_MODEL = "test-model"; delete process.env.SOCIETY_ACCESS_CODE; process.env.RATE_LIMIT_PER_10_MIN = "1000"; });
+test.beforeEach(() => { process.env.GEMINI_API_KEY = "test-key"; process.env.GEMINI_MODEL = "test-model"; delete process.env.SOCIETY_ACCESS_CODE; delete process.env.NETLIFY; delete process.env.NETLIFY_DEV; process.env.RATE_LIMIT_PER_10_MIN = "1000"; });
 
 test("letter validation catches bad input", () => {
   const r = V.validateLetter({ ...letterBody, contact: "abc", issueStartDate: "2026-02-30", details: "short" }, { today: "2026-10-03" });
@@ -127,11 +127,62 @@ test("generate-minutes without free text skips the model", async () => {
   assert.match(d.minutes, /No action items recorded\./);
 });
 
-test("rules-qa refuses uncited answers and invalid ids", async () => {
-  mockGemini({ answerable: true, answer: "Made up answer", citation_ids: ["does-not-exist"] });
-  const a = parse(await call("../netlify/functions/rules-qa.js", { question: "What is the quorum for an AGM?" }));
+test("rules-qa rejects unknown citations and accepts retrieved evidence", async () => {
+  mockGemini({ answerable: true, scope: true, answer: "Made up answer", citation_ids: ["does-not-exist"], evidence: [] });
+  const a = parse(await call("../netlify/functions/rules-qa.js", { question: "How do I file a complaint?" }));
   assert.equal(a.answerable, false); assert.deepEqual(a.citations, []);
-  mockGemini({ answerable: true, answer: "Waivers need an authorized decision.", citation_ids: ["faq-waiver"] });
-  const b = parse(await call("../netlify/functions/rules-qa.js", { question: "Can my charge be waived?" }));
-  assert.equal(b.answerable, true); assert.equal(b.citations[0].id, "faq-waiver");
+  const quote = require("../netlify/data/assistant-sources.json").passages[0].text;
+  const calls = mockGemini({answerable:true,scope:true,answer:"Submit the complaint in writing with details.",nextStep:"Write to an office bearer.",clarification:"Check registered bye-laws.",citation_ids:["model171"],evidence:[{id:"model171",quote}]});
+  const b = parse(await call("../netlify/functions/rules-qa.js", { question: "How do I file a complaint?", language:"mr" }));
+  assert.equal(b.answerable, true); assert.equal(b.citations[0].locator, "Bye-law 171");
+  assert.match(b.disclaimer,/General model bye-law guidance/);assert.match(b.citations[0].sourceUrl,/#page=54/);
+  const user=JSON.parse(JSON.parse(calls[0].opts.body).contents[0].parts[0].text);
+  assert.equal(user.language,"Marathi");assert.ok(user.passages.some(p=>p.id==='model171'));
+  assert.ok(!user.passages.some(p=>p.id==='faq-waiver'));
+});
+
+test("rules-qa refuses forged quotes; unsupported and urgent cases skip Gemini", async () => {
+  mockGemini({answerable:true,scope:true,answer:"Invented",citation_ids:["model171"],evidence:[{id:"model171",quote:"This is not in the document."}]});
+  assert.equal(parse(await call("../netlify/functions/rules-qa.js",{question:"How do I file a complaint?"})).answerable,false);
+  const calls=mockGemini({});
+  const out=parse(await call("../netlify/functions/rules-qa.js",{question:"Explain quantum computing"}));
+  assert.match(out.answer,/I cannot confirm this from the available sources/);
+  assert.match(out.clarification,/society rules/);assert.equal(calls.length,0);
+  const urgent=parse(await call("../netlify/functions/rules-qa.js",{question:"There is a gas leak in the building"}));
+  assert.match(urgent.answer,/emergency/);assert.equal(calls.length,0);
+  assert.equal((await call("../netlify/functions/rules-qa.js",{question:"x".repeat(1001)})).statusCode,422);
+});
+
+test("retrieval prioritises registered clauses and excludes draft and old sources", () => {
+  const {retrieve}=require("../netlify/lib/retrieval");
+  const src=(id,kind,status,url)=>({id,kind,status,url,edition:"2026",verifiedBy:"Secretary",verifiedOn:"2026-10-03"});
+  const data={sources:[src("r","registered","applicable","https://example.org/registered.pdf"),src("d","registered","draft","https://example.org/draft.pdf"),src("m","model","model-reference","https://sahakarayukta.maharashtra.gov.in/model.pdf"),src("o","model","superseded","https://sahakarayukta.maharashtra.gov.in/old.pdf"),src("bad","model","model-reference","https://random.example/model.pdf")],passages:["r","d","m","o","bad"].map(id=>({id,sourceId:id,text:"complaint application in writing",provision:"171"}))};
+  assert.deepEqual(retrieve("complaint",data).map(p=>p.id),["r","m"]);
+});
+
+test("production requests fail closed when the shared limiter is unavailable", async () => {
+  process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT="true";
+  try { const r=await call("../netlify/functions/rules-qa.js",{question:"How do I complain?"});assert.equal(r.statusCode,503);assert.equal(parse(r).error.code,"LIMITER_UNAVAILABLE"); }
+  finally {delete process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT;}
+});
+
+test("shared limiter applies atomic counter and blocks quota excess", async () => {
+  process.env.UPSTASH_REDIS_REST_URL="https://limiter.example";
+  process.env.UPSTASH_REDIS_REST_TOKEN="test-token";
+  process.env.RATE_LIMIT_PER_10_MIN="2";
+  let command;
+  global.fetch=async (_url,opts)=>{command=JSON.parse(opts.body);return {ok:true,json:async()=>({result:3})};};
+  try {
+    const r=await call("../netlify/functions/rules-qa.js",{question:"How do I file a complaint?"},{"x-nf-client-connection-ip":"192.0.2.5"});
+    assert.equal(r.statusCode,429);assert.equal(command[0],"EVAL");assert.match(command[1],/EXPIRE/);assert.ok(!command[3].includes("192.0.2.5"));
+    global.fetch=async()=>{throw Error("offline")};
+    assert.equal((await call("../netlify/functions/rules-qa.js",{question:"How do I complain?"})).statusCode,503);
+  } finally {delete process.env.UPSTASH_REDIS_REST_URL;delete process.env.UPSTASH_REDIS_REST_TOKEN;}
+});
+
+test("homepage includes centred assistant and safe shared renderer", () => {
+  const fs=require("node:fs");const html=fs.readFileSync("public/index.html","utf8");const js=fs.readFileSync("public/js/assistant.js","utf8");
+  assert.ok(html.indexOf('id="ask-society"')<html.indexOf('What you can do here'));
+  assert.match(html,/Ask about society rules or procedures/);assert.match(html,/id="ask-btn"/);assert.match(html,/js\/assistant.js/);
+  assert.doesNotMatch(js,/innerHTML|insertAdjacentHTML|eval\(/);assert.match(js,/Draft a letter about this/);
 });

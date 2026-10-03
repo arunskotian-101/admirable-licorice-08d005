@@ -1,0 +1,77 @@
+{
+  "sources": [
+    {
+      "id": "model2014",
+      "title": "Maharashtra Model Bye-laws — Housing Society",
+      "edition": "2014",
+      "kind": "model",
+      "status": "model-reference",
+      "verifiedBy": "Source checked against official PDF",
+      "verifiedOn": "2026-10-03",
+      "url": "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/Model%20Bye%20Laws%20of%20Coop%20Housing%20Society%20New%20Flatowner%20Type%20(2-9-14).pdf#page=54",
+      "downloadUrl": "/documents/maharashtra-model-bye-laws-2014.pdf",
+      "note": "Model reference only; not evidence of this society’s registered provisions. Later applicable legislation may override this edition."
+    },
+    {
+      "id": "act2025",
+      "kind": "legislation",
+      "status": "applicable",
+      "title": "Maharashtra Co-operative Societies Act, 1960",
+      "edition": "Official consolidated text as on 6 June 2025; later amendments must be checked",
+      "verifiedBy": "Checked against Maharashtra Cooperation Department official publication",
+      "verifiedOn": "2026-10-03",
+      "url": "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/maharashtra-co-operative-societies-act-1960-%20English%20Edition.pdf",
+      "note": "Selected excerpt only, not a full legislative corpus. Confirm later amendments and applicability."
+    }
+  ],
+  "passages": [
+    {
+      "id": "model171",
+      "sourceId": "model2014",
+      "provision": "Bye-law 171",
+      "keywords": "complaint complaints file submit writing तक्रार तक्रारी लेखी अर्ज",
+      "text": "Member/Members shall submit their complaint application to any of the Office bearers of the Society, in writing, giving thereby the details of the complaint.",
+      "page": 54
+    },
+    {
+      "id": "model172",
+      "sourceId": "model2014",
+      "provision": "Bye-law 172",
+      "keywords": "complaint complaints response timeline decision meeting तक्रार उत्तर निर्णय मुदत",
+      "text": "After receipt of such, complaint application, the committee shall take decision thereof, in the immediate next Managing Committee meeting. Such decision shall be communicated to the concerned Member, within 15 days thereafter.",
+      "page": 54
+    },
+    {
+      "id": "model44",
+      "sourceId": "model2014",
+      "provision": "Bye-law 44",
+      "text": "Every Member shall keep his flat / unit in good maintenance.",
+      "keywords": "flat maintenance repairs unit देखभाल दुरुस्ती सदनिका",
+      "page": 22
+    },
+    {
+      "id": "model70",
+      "sourceId": "model2014",
+      "provision": "Bye-law 70",
+      "text": "A Member shall be required to pay simple interest at twenty one percent per annum, or, at such lower rate as may be fixed by the General Body, on the outstanding dues to the Society, from the date the amount was due as prescribed under Bye-law no. 69, till full and final payment by the Member",
+      "keywords": "interest overdue payment charges late dues fee fees व्याज थकबाकी शुल्क",
+      "page": 29
+    },
+    {
+      "id": "model165",
+      "sourceId": "model2014",
+      "provision": "Bye-law 165",
+      "text": "No bye-law shall be made, altered or abrogated unless (i) a proposal to do so has been communicated to all Members 14 days before the Meeting of the General Body of the Society, at which it is proposed to be considered, and, (ii) the resolution is passed by not less than 2/3rd majority of the Members present and voting at the meeting of the General Body of the Society, and (iii) the making, alteration or abrogation is Approved and Registered by the Registering Authority.",
+      "keywords": "amend amendment change proposal proposed बदल दुरुस्ती उपविधी प्रस्ताव",
+      "page": 52
+    },
+    {
+      "id": "act13-1-excerpt",
+      "sourceId": "act2025",
+      "provision": "Section 13(1), opening excerpt — not the complete section",
+      "page": 22,
+      "text": "No amendment of the by-laws of a society shall be valid until registered under this Act. For the purpose of registration of an amendment of the by-laws, a copy of the amendment passed, in the manner prescribed, at a general meeting of the society, shall be forwarded to the Registrar.",
+      "keywords": "amendment amend register registration change bye-laws प्रस्ताव नोंदणी उपविधी बदल"
+    }
+  ]
+}
