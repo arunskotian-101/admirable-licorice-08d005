@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "description": "Residential society website with AI-assisted letter and minutes drafting (Netlify Functions + Gemini).",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "npx netlify-cli dev",
     "deploy": "npx netlify-cli deploy --prod",
-    "test": "node --test"
+    "test": "node --test",
+    "validate:sources": "node scripts/validate-sources.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.3"
   }
 }

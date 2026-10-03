@@ -13,87 +13,198 @@
       "title": "Model Bye-laws of Co-operative Housing Society (Flat-owner type), Maharashtra, 2014",
       "kind": "general-reference",
       "url": "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/Model%20Bye%20Laws%20of%20Coop%20Housing%20Society%20New%20Flatowner%20Type%20%282-9-14%29.pdf",
-      "note": "Named in the deck as a general reference only. The society's own registered provisions, amendment certificates and later applicable legislation must be verified. No clause from this document is quoted on this site until a committee member verifies it."
+      "note": "Model reference only; not evidence of this society’s registered provisions. Later applicable legislation may override this edition.",
+      "edition": "2014"
+    },
+    {
+      "id": "act2025",
+      "kind": "general-reference",
+      "status": "applicable",
+      "title": "Maharashtra Co-operative Societies Act, 1960",
+      "edition": "Official consolidated text as on 6 June 2025; later amendments must be checked",
+      "verifiedBy": "Checked against Maharashtra Cooperation Department official publication",
+      "verifiedOn": "2026-10-03",
+      "url": "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/maharashtra-co-operative-societies-act-1960-%20English%20Edition.pdf",
+      "note": "Selected excerpt only, not a full legislative corpus. Confirm later amendments and applicability."
     }
   ],
   "entries": [
     {
-      "id": "faq-ai-role", "type": "faq", "category": "Using this website",
+      "id": "faq-ai-role",
+      "type": "faq",
+      "category": "Using this website",
       "question": "What can the AI assistant do, and what can it not do?",
       "answer": "The assistant supports communication: it prepares neutral, editable requests using member facts and attachments, explains a verified provision and cites its source, and flags missing society policies. Office bearers and other competent bodies keep their decision-making powers.",
-      "sourceId": "deck", "locator": "Slide 9 — AI support for society members"
+      "sourceId": "deck",
+      "locator": "Slide 9 — AI support for society members"
     },
     {
-      "id": "faq-decisions", "type": "faq", "category": "Using this website",
+      "id": "faq-decisions",
+      "type": "faq",
+      "category": "Using this website",
       "question": "Who decides approvals, disputes and exceptions?",
       "answer": "Approvals, disputes and exceptions are referred to the competent body. The assistant does not decide them.",
-      "sourceId": "deck", "locator": "Slide 9 — Decision boundaries"
+      "sourceId": "deck",
+      "locator": "Slide 9 — Decision boundaries"
     },
     {
-      "id": "faq-urgent", "type": "faq", "category": "Using this website",
+      "id": "faq-urgent",
+      "type": "faq",
+      "category": "Using this website",
       "question": "What should I do about an urgent concern?",
       "answer": "Contact the office bearers and the relevant authorities directly rather than relying on a drafted letter.",
-      "sourceId": "deck", "locator": "Slide 9 — Urgent concerns"
+      "sourceId": "deck",
+      "locator": "Slide 9 — Urgent concerns"
     },
     {
-      "id": "faq-complaint-process", "type": "faq", "category": "Complaints and requests",
+      "id": "faq-complaint-process",
+      "type": "faq",
+      "category": "Complaints and requests",
       "question": "How is a member complaint handled?",
       "answer": "Receive: log the concern with dates and location, record the effect on residents, and attach relevant evidence. Review: confirm the applicable service or rule, arrange inspection where needed, and keep allegations separate from findings. Respond: record the committee's decision, explain the outcome and next step, and keep a dated communication record. Follow up: request the member's feedback, confirm completed action, and keep unresolved points open.",
-      "sourceId": "deck", "locator": "Slide 6 — Member complaint process"
+      "sourceId": "deck",
+      "locator": "Slide 6 — Member complaint process"
     },
     {
-      "id": "faq-what-to-include", "type": "faq", "category": "Complaints and requests",
+      "id": "faq-what-to-include",
+      "type": "faq",
+      "category": "Complaints and requests",
       "question": "What should I include when I raise a concern?",
       "answer": "The first step of the complaint process is to log the concern with dates and location, record the effect on residents, and attach relevant evidence.",
-      "sourceId": "deck", "locator": "Slide 6 — Receive"
+      "sourceId": "deck",
+      "locator": "Slide 6 — Receive"
     },
     {
-      "id": "faq-services", "type": "faq", "category": "Maintenance and services",
+      "id": "faq-services",
+      "type": "faq",
+      "category": "Maintenance and services",
       "question": "Which daily services does the committee review?",
       "answer": "Facilities (lifts, pumps, lighting and drainage — faults and vendor visits are recorded), Housekeeping (cleaning and waste collection — recurring service gaps are logged), and Repairs (inspection and estimates are arranged, and the approval authority is confirmed before work).",
-      "sourceId": "deck", "locator": "Slide 4 — Maintenance and daily services"
+      "sourceId": "deck",
+      "locator": "Slide 4 — Maintenance and daily services"
     },
     {
-      "id": "faq-billing", "type": "faq", "category": "Maintenance bills and payments",
+      "id": "faq-billing",
+      "type": "faq",
+      "category": "Maintenance bills and payments",
       "question": "How are maintenance bills reviewed and explained?",
       "answer": "The bill, payment reference and ledger are matched, and discrepancies are explained in writing. Bills contain different charging heads, so the approved allocation basis and rates are verified before a member's demand is explained.",
-      "sourceId": "deck", "locator": "Slide 7 — Billing basis"
+      "sourceId": "deck",
+      "locator": "Slide 7 — Billing basis"
     },
     {
-      "id": "faq-waiver", "type": "faq", "category": "Maintenance bills and payments",
+      "id": "faq-waiver",
+      "type": "faq",
+      "category": "Maintenance bills and payments",
       "question": "Can a charge be waived or an exception made?",
       "answer": "Any waiver or exception needs an authorized decision.",
-      "sourceId": "deck", "locator": "Slide 7 — Billing basis"
+      "sourceId": "deck",
+      "locator": "Slide 7 — Billing basis"
     },
     {
-      "id": "faq-payment-clarifications", "type": "faq", "category": "Maintenance bills and payments",
+      "id": "faq-payment-clarifications",
+      "type": "faq",
+      "category": "Maintenance bills and payments",
       "question": "What payment points does the committee review?",
       "answer": "Confirm the interest provision and resolution; document disputes and reconciliation; record decisions on payment requests; review receipts against bank entries; separate billed amounts from collections; and check outstanding balances by period.",
-      "sourceId": "deck", "locator": "Slide 7 — Payment clarifications"
+      "sourceId": "deck",
+      "locator": "Slide 7 — Payment clarifications"
     },
     {
-      "id": "faq-roles", "type": "faq", "category": "Office bearers",
+      "id": "faq-roles",
+      "type": "faq",
+      "category": "Office bearers",
       "question": "What do the Secretary, Chairman and finance responsibility cover?",
       "answer": "Secretary: manages correspondence, meeting notices and records, and tracks requests through the approved process. Chairman: guides committee review and follow-up within the society's governing framework. Finance responsibility: reconciles bills and receipts and confirms mandates and approval limits. Each person's duties must be confirmed against the registered bye-laws, committee resolutions and authorized delegations.",
-      "sourceId": "deck", "locator": "Slide 5 — Office bearer responsibilities"
+      "sourceId": "deck",
+      "locator": "Slide 5 — Office bearer responsibilities"
     },
     {
-      "id": "faq-records", "type": "faq", "category": "Governance and records",
+      "id": "faq-records",
+      "type": "faq",
+      "category": "Governance and records",
       "question": "Which governance records should the society keep available?",
       "answer": "The current registered bye-laws, meeting notices and agenda, minutes and action records, verified voting eligibility, and registered amendment records.",
-      "sourceId": "deck", "locator": "Slide 8 — Governance and meeting records"
+      "sourceId": "deck",
+      "locator": "Slide 8 — Governance and meeting records"
     },
     {
-      "id": "faq-claims", "type": "faq", "category": "Governance and records",
+      "id": "faq-claims",
+      "type": "faq",
+      "category": "Governance and records",
       "question": "Can I rely on this site for voting rights, timelines or whether a decision is valid?",
       "answer": "No. Current applicable law must be checked before making claims about voting rights, timelines or the validity of a decision, and contested interpretation should be referred to authorized review.",
-      "sourceId": "deck", "locator": "Slide 8 — Governance and meeting records"
+      "sourceId": "deck",
+      "locator": "Slide 8 — Governance and meeting records"
     },
     {
-      "id": "faq-which-bylaws", "type": "faq", "category": "Governance and records",
+      "id": "faq-which-bylaws",
+      "type": "faq",
+      "category": "Governance and records",
       "question": "Which bye-laws apply to our society?",
       "answer": "The deck names the Maharashtra 2014 model bye-laws only as a general reference. The society's registered provisions and later applicable legislation must be verified; this site does not state any bye-law clause until a committee member adds a verified entry.",
-      "sourceId": "mh-model-2014", "locator": "General reference named in the deck (slide notes)"
+      "sourceId": "mh-model-2014",
+      "locator": "General reference named in the deck (slide notes)"
+    },
+    {
+      "id": "model171",
+      "type": "rule",
+      "title": "Bye-law 171",
+      "quote": "Member/Members shall submit their complaint application to any of the Office bearers of the Society, in writing, giving thereby the details of the complaint.",
+      "locator": "Bye-law 171 — PDF page 54",
+      "sourceId": "mh-model-2014",
+      "verifiedOn": "2026-10-03",
+      "verifiedBy": "PDF/source verification"
+    },
+    {
+      "id": "model172",
+      "type": "rule",
+      "title": "Bye-law 172",
+      "quote": "After receipt of such, complaint application, the committee shall take decision thereof, in the immediate next Managing Committee meeting. Such decision shall be communicated to the concerned Member, within 15 days thereafter.",
+      "locator": "Bye-law 172 — PDF page 54",
+      "sourceId": "mh-model-2014",
+      "verifiedOn": "2026-10-03",
+      "verifiedBy": "PDF/source verification"
+    },
+    {
+      "id": "model44",
+      "type": "rule",
+      "title": "Bye-law 44",
+      "quote": "Every Member shall keep his flat / unit in good maintenance.",
+      "locator": "Bye-law 44 — PDF page 22",
+      "sourceId": "mh-model-2014",
+      "verifiedOn": "2026-10-03",
+      "verifiedBy": "PDF/source verification"
+    },
+    {
+      "id": "model70",
+      "type": "rule",
+      "title": "Bye-law 70",
+      "quote": "A Member shall be required to pay simple interest at twenty one percent per annum, or, at such lower rate as may be fixed by the General Body, on the outstanding dues to the Society, from the date the amount was due as prescribed under Bye-law no. 69, till full and final payment by the Member",
+      "locator": "Bye-law 70 — PDF page 29",
+      "sourceId": "mh-model-2014",
+      "verifiedOn": "2026-10-03",
+      "verifiedBy": "PDF/source verification"
+    },
+    {
+      "id": "model165",
+      "type": "rule",
+      "title": "Bye-law 165",
+      "quote": "No bye-law shall be made, altered or abrogated unless (i) a proposal to do so has been communicated to all Members 14 days before the Meeting of the General Body of the Society, at which it is proposed to be considered, and, (ii) the resolution is passed by not less than 2/3rd majority of the Members present and voting at the meeting of the General Body of the Society, and (iii) the making, alteration or abrogation is Approved and Registered by the Registering Authority.",
+      "locator": "Bye-law 165 — PDF page 52",
+      "sourceId": "mh-model-2014",
+      "verifiedOn": "2026-10-03",
+      "verifiedBy": "PDF/source verification"
+    },
+    {
+      "id": "act13-1-excerpt",
+      "type": "rule",
+      "title": "Section 13(1), opening excerpt — not the complete section",
+      "quote": "No amendment of the by-laws of a society shall be valid until registered under this Act. For the purpose of registration of an amendment of the by-laws, a copy of the amendment passed, in the manner prescribed, at a general meeting of the society, shall be forwarded to the Registrar.",
+      "locator": "Section 13(1), opening excerpt — not the complete section — PDF page 22",
+      "sourceId": "act2025",
+      "verifiedOn": "2026-10-03",
+      "verifiedBy": "PDF/source verification"
     }
   ]
 }

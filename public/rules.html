@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rules & FAQ — Sai Heritage</title>
+<title>Rules & FAQ — Residential Society</title>
 <meta name="description" content="Society guidance drawn only from the sources supplied by the society.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/css/styles.css">
@@ -11,7 +11,7 @@
 <body>
 <a class="skip" href="#main">Skip to main content</a>
 <header class="site-header"><div class="wrap bar">
-  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span data-society-name>Sai Heritage</span></a>
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span data-society-name>Residential Society</span></a>
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   <nav id="nav" aria-label="Main">
     <a href="/">Home</a><a href="/letter.html">Member letter</a><a href="/minutes.html">Meeting minutes</a><a href="/rules.html">Rules &amp; FAQ</a>
@@ -34,21 +34,21 @@
   <p id="search-status" class="hint" role="status" aria-live="polite"></p>
   <div id="faq"></div>
 
-  <section class="card" aria-labelledby="ask-title">
-    <h2 id="ask-title">Ask a question</h2>
-    <p class="muted">The assistant answers only from the entries on this page and shows which ones it used. If they do not cover your question, it says so.</p>
+  <section class="card assistant-card" aria-labelledby="ask-title">
+    <h2 id="ask-title">Ask Society Assistant</h2>
+    <p class="muted">Answers use reviewed source passages. No live internet search is enabled. Registered society bye-laws have not yet been supplied; current source coverage is limited.</p>
     <div id="health-banner" class="notice notice-warn" hidden></div>
     <form id="ask-form" novalidate>
       <div class="error-summary" role="alert" hidden></div>
-      <div class="field"><label class="req" for="question">Your question</label><input id="question" name="question" maxlength="600" autocomplete="off"></div>
-      <div class="form-actions"><button class="btn" id="ask-btn" type="submit">Ask</button><span id="ask-status" class="status" role="status" aria-live="polite"></span></div>
+      <div class="field"><label class="req" for="question">Ask about society rules or procedures</label><textarea id="question" name="question" maxlength="1000" rows="3" autocomplete="off"></textarea></div>
+      <div class="field"><label for="language">Answer language / उत्तराची भाषा</label><select id="language" name="language"><option value="en">English</option><option value="mr">मराठी</option></select></div><div class="form-actions"><button class="btn" id="ask-btn" type="submit">Ask</button><span id="ask-status" class="status" role="status" aria-live="polite"></span></div>
     </form>
-    <div id="answer" hidden></div>
+    <div id="answer" aria-live="polite"><p class="muted">Your answer and relevant source citations will appear here.</p></div>
   </section>
 </main>
 <footer class="site-footer"><div class="wrap">
-  <p><strong data-society-name>Sai Heritage</strong></p>
+  <p><strong data-society-name>Residential Society</strong></p>
   <p>Documents produced with the AI assistant are marked “Draft — requires review”. This website never sends letters or minutes on anyone’s behalf, and it does not confirm delivery, approval or any decision.</p>
 </div></footer>
 <div id="print-area" class="print-only" aria-hidden="true"><p id="print-draft" class="print-draft"></p><pre id="print-body"></pre></div>
-<script src="/js/validators.js"></script><script src="/js/common.js"></script><script src="/js/rules.js"></script></body></html>
+<script src="/js/validators.js"></script><script src="/js/common.js"></script><script src="/js/rules.js"></script><script src="/js/assistant.js"></script></body></html>

@@ -39,28 +39,5 @@
     $("#search").addEventListener("input", (e) => render(e.target.value));
   }).catch(() => { $("#sources").replaceChildren(h("p", { class: "error", text: "The rules and FAQ data could not be loaded. If you are running locally, use “netlify dev” rather than opening the file directly." })); });
 
-  /* ----- grounded Q&A ----- */
-  checkHealth($("#health-banner"));
-  const form = $("#ask-form"), btn = $("#ask-btn"), st = $("#ask-status"), box = $("#answer");
-  form.addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const question = form.elements.question.value.trim();
-    clearErrors(form); box.hidden = true;
-    if (question.length < 5) { showErrors(form, { question: "Enter a question of at least 5 characters." }); return; }
-    if (question.length > 400) { showErrors(form, { question: "Question must be 400 characters or fewer (currently " + question.length + ")." }); return; }
-    st.className = "status"; st.textContent = "Checking the supplied sources…"; setLoading(btn, true, "Checking…");
-    try {
-      const out = await apiPost("/api/rules-qa", { question });
-      st.textContent = "";
-      box.replaceChildren(
-        h("p", { class: "draft-banner", text: out.draftLabel }),
-        h("div", { class: "notice " + (out.answerable ? "" : "notice-warn") }, h("p", { text: out.answer })),
-        ...(out.citations.length ? [h("p", { class: "label", text: "Entries used" }), ...out.citations.map((c) => h("p", { class: "small" }, h("strong", { text: c.question }), " — " + c.sourceTitle + ", " + c.locator + ". ", c.sourceUrl ? h("a", { href: c.sourceUrl, target: "_blank", rel: "noopener noreferrer", text: "Open source" }) : null))] : []),
-        h("p", { class: "small muted", text: "AI-generated from the entries above. Check the cited entry, and confirm anything important with the Secretary or Managing Committee." }));
-      box.hidden = false;
-    } catch (err) {
-      st.className = "status err"; st.textContent = err.message;
-      if (err.fields) showErrors(form, err.fields);
-    } finally { setLoading(btn, false); }
-  });
+
 })();
